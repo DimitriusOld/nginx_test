@@ -1,4 +1,11 @@
 node {
     checkout scm
-    def customImage = docker.build("nginx:${env.BUILD_ID}")
+
+    docker.withRegistry('https://hub.docker.com/r/dimitrius/nginx_test/') {
+
+        def customImage = docker.build("nginx_test:${env.BUILD_ID}")
+
+        /* Push the container to the custom Registry */
+        customImage.push()
+    }
 }

@@ -1,7 +1,8 @@
 node {
     checkout scm
     def customImage = docker.build("nginx_test:${env.BUILD_ID}")
-    customImage.push('credentials-id')
-
+    docker.withRegistry(CredentialID) {
+       dockerImage.push('latest')
+}
     customImage.push('latest')
 }
